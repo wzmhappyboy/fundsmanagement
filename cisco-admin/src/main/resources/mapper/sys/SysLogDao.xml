@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cisco.modules.sys.dao.SysLogDao">
+<select id="queryPage" resultType="io.cisco.modules.sys.entity.SysLogEntity">
+    select  * from sys_log
+
+</select>
+
+    <insert id="save" parameterType="io.cisco.modules.sys.entity.SysLogEntity">
+        insert  into sys_log(id,username,operation,method,params,time,ip,create_date)
+        values (#{id},#{username},#{operation},#{method},#{params},#{time},#{ip},#{createDate})
+    </insert>
+
+    <select id="getByName" parameterType="String" resultType="io.cisco.modules.sys.entity.SysLogEntity">
+        select  * from sys_log where username like  "%" #{name} "%" OR  operation like  "%" #{name} "%"
+    </select>
+
+</mapper>

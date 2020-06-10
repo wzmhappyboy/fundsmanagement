@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cisco.modules.sys.dao.SysUserDao">
+
+	<resultMap id="sysUserResultMap" type="io.cisco.modules.sys.entity.SysUserEntity">
+		<id property="userId" column="user_id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="salt" column="salt"/>
+		<result property="email" column="email"/>
+		<result property="mobile" column="mobile"/>
+		<result property="status" column="status"/>
+		<result property="deptId" column="dept_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="deptName" column="name"/>
+	</resultMap>
+
+	<resultMap id="sysOssResultMap" type="io.cisco.modules.oss.entity.SysOssEntity">
+		<id property="id" column="id"/>
+		<result property="createDate" column="create_date"/>
+		<result property="url" column="url"/>
+	</resultMap>
+
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms" resultType="string">
+		select m.perms from sys_user_role ur
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id
+		where ur.user_id = #{userId}
+	</select>
+
+	<!-- 查询用户的所有菜单ID -->
+	<select id="queryAllMenuId" resultType="long">
+		select distinct rm.menu_id from sys_user_role ur
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+		where ur.user_id = #{userId}
+	</select>
+
+<select id="selectOne" resultMap="sysUserResultMap" parameterType="String">
+	select * from sys_user where username=#{username}
+</select>
+
+	<select id="getById" resultMap="sysUserResultMap" parameterType="Long">
+	select * from sys_user where user_id=#{id}
+</select>
+
+	<select id="getByName" resultType="io.cisco.modules.sys.entity.SysUserEntity" parameterType="string">
+		select  * from  sys_user where username like "%" #{name} "%"
+	</select>
+
+
+	<update id="updatePassword">
+	update sys_user set password=#{newPassword} where user_id=#{id}
+</update>
+
+
+	<insert id="saveUser" parameterType="io.cisco.modules.sys.entity.SysUserEntity">
+	insert into sys_user(user_id,username,password,salt,email,mobile,status,dept_id,create_time,url)
+	value (#{userId},#{username},#{password},#{salt},#{email},#{mobile},#{status},#{deptId},#{createTime},#{url})
+	</insert>
+
+	<select id="queryPage" resultMap="sysUserResultMap">
+		select  * from sys_user t1 join sys_dept t2 on t1.dept_id=t2.dept_id
+<!--		<if test="sql_filter != null">-->
+<!--			and ${sql_filter}-->
+<!--		</if>-->
+	</select>
+
+	<update id="update" parameterType="io.cisco.modules.sys.entity.SysUserEntity">
+	update sys_user set username=#{username},password=#{password},salt=#{salt},email=#{email},mobile=#{mobile},status=#{status},dept_id=#{deptId},create_time=#{createTime},url=#{url}
+where user_id=#{userId}
+	</update>
+
+	<delete id="removeByIds" parameterType="java.util.List">
+delete from sys_user where user_id in
+		<foreach collection="list"  item="item" open="(" separator="," close=")"  >
+			#{item}
+		</foreach>
+
+	</delete>
+
+	<select id="queryPage2" resultMap="sysOssResultMap">
+		select  * from sys_oss
+
+	</select>
+
+</mapper>

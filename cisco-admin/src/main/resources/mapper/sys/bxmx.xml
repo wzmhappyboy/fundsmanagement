@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.cisco.modules.sys.dao.BxmxDao">
+    <select id="queryPassBxmx" parameterType="long" resultType="io.cisco.modules.sys.entity.Bxmx">
+        select * from item_detail where dept_id=#{dept_id}
+    </select>
+    <select id="queryNotPassBxmx" parameterType="long" resultType="io.cisco.modules.sys.entity.Bxmx">
+        select * from item_detail where dept_id=#{dept_id} and flag=0
+    </select>
+    <update id="updateBxmxState" parameterType="long">
+        update item_detail set flag=1 where id=#{id}
+    </update>
+</mapper>

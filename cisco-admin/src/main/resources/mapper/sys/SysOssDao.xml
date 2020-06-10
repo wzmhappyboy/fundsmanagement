@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.cisco.modules.sys.dao.SysOssDao">
+
+    <resultMap id="sysOssResultMap" type="io.cisco.modules.oss.entity.SysOssEntity">
+        <id property="id" column="id"/>
+        <result property="createDate" column="create_date"/>
+        <result property="url" column="url"/>
+    </resultMap>
+
+
+    <select id="queryPage" resultMap="sysOssResultMap">
+                select  * from sys_oss
+        <if test="sql_filter != null">
+            and ${sql_filter}
+        </if>
+
+            </select>
+
+
+    <insert id="save" parameterType="io.cisco.modules.oss.entity.SysOssEntity">
+        insert  into sys_oss(id,url,name,create_date)
+        values (#{id},#{url},#{name},#{createDate})
+    </insert>
+
+    <delete id="removeByIds" parameterType="java.util.List">
+        delete from sys_oss where id in
+        <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+            #{item}
+        </foreach>
+
+    </delete>
+        </mapper>

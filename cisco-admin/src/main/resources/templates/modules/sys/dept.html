@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<div>
+<head>
+<title>项目管理</title>
+<#include "/header.html">
+<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+<link rel="stylesheet" href="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.css">
+<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.min.js"></script>
+<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.bootstrap3.js"></script>
+<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.extension.js"></script>
+<script src="${request.contextPath}/statics/plugins/treegrid/tree.table.js"></script>
+</head>
+
+<div id="rrapp" v-cloak>
+	<div v-show="xmmx">
+	<div v-show="showList">
+		<div class="grid-btn">
+			<#if shiro.hasPermission("sys:dept:save")>
+			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:dept:update")>
+			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;预约报销</a>
+			</#if>
+			<#if shiro.hasPermission("sys:dept:delete")>
+			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+<#if shiro.hasPermission("sys:dept:manage")>
+<a class="btn btn-primary" @click="manage" ><i class="fa fa-pencil-square-o"></i>&nbsp;报销管理</a>
+</#if>
+</div>
+		<table id="deptTable" data-mobile-responsive="true" data-click-to-select="true">
+			<thead>
+			<tr>
+				<th data-field="selectItem" data-checkbox="true"></th>
+			</tr>
+			</thead>
+		</table>
+	</div>
+
+	<div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-2 control-label">项目名称</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="dept.name" placeholder="项目名称"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">上级项目</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" style="cursor:pointer;" v-model="dept.parentName" @click="deptTree" readonly="readonly" placeholder="一级部门"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">经费额度</div>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" v-model="dept.orderNum" placeholder="经费额度"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div>
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<n v-show="!xmmx">
+	<div style="float: left">
+		<table class="table table-bordered" style="width: 600px;text-align:center" >
+			<tr><td colspan="5">{{name}}:报销信息</td></tr>
+			<tr><td>发票号</td><td>物品名称</td><td>规格</td><td>数量</td><td>价格</td></tr>
+			<tr v-for="bxmx in bxmxs">
+				<td v-text="bxmx.id"></td>
+				<td v-text="bxmx.name"></td>
+				<td v-text="bxmx.size"></td>
+				<td v-text="bxmx.number"></td>
+				<td v-text="bxmx.price"></td>
+
+			</tr>
+		</table></div>
+	<div style="float: left;padding-left: 50px">
+		<table class="table table-bordered" style="width: 600px;text-align:center" >
+			<tr><td colspan="6">待通过报销</td></tr>
+			<tr><td>发票号</td><td>物品名称</td><td>规格</td><td>数量</td><td>价格</td><td>操作</td></tr>
+			<tr v-for="bxmx in bxmxs2">
+				<td v-text="bxmx.id"></td>
+				<td v-text="bxmx.name"></td>
+				<td v-text="bxmx.size"></td>
+				<td v-text="bxmx.number"></td>
+				<td v-text="bxmx.price"></td>
+				<td><a href="javascript:;" @click="updateBxmx(bxmx.id)">通过</a>&nbsp;&nbsp;&nbsp;<a>删除</a></td>
+			</tr>
+		</table>
+</n>      <input type="button" class="btn btn-warning" @click="reload" value="返回" />
+</div>
+
+
+&nbsp;
+
+
+</div>
+</div>
+<!-- 选择项目 -->
+<div id="deptLayer" style="display: none;padding:10px;">
+	<ul id="deptTree" class="ztree"></ul>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/dept.js?_${.now?long}"></script>
+</body>
+</html>
