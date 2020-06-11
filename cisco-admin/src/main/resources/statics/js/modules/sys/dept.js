@@ -18,9 +18,11 @@ var vm = new Vue({
     data:{
         showList: true,
         xmmx:true,
+        manage:true,
         title: null,
         bxmxs:null,
         bxmxs2:null,
+        home:true,
         dept:{
             parentName:null,
             parentId:0,
@@ -44,7 +46,27 @@ var vm = new Vue({
             vm.dept = {parentName:null,parentId:0,orderNum:0};
             vm.getDept();
         },
-        manage: function(){
+        mma: function(){
+            var deptId =getDeptId();
+            $.ajax({
+                type: "POST",
+                url:  "/management.html",
+                data:{
+                    "id":deptId,
+                },
+                success: function(data) {
+                    vm.bxmxs=data.list;
+                    vm.bxmxs2=data.list2;
+                    vm.name=data.name;
+                    vm.xmmx=false;
+                    vm.home=false;
+                },
+                error:function (data) {
+                    alert("系统错误");
+                }
+            });
+        },
+        manage2: function(){
             var deptId =getDeptId();
 
             $.ajax({
@@ -57,13 +79,15 @@ var vm = new Vue({
                     vm.bxmxs=data.list;
                     vm.bxmxs2=data.list2;
                     vm.name=data.name;
-                    vm.xmmx=false;
+                    vm.manage=false;
+                    vm.home=false;
                 },
                 error:function (data) {
                     alert("系统错误");
                 }
             });
         },
+
         updateBxmx: function(id){
             $.ajax({
                 type:"POST",
@@ -159,6 +183,8 @@ var vm = new Vue({
         reload: function () {
             vm.showList = true;
             vm.xmmx=true;
+            vm.manage=true;
+            vm.home=true;
             Dept.table.refresh();
         }
     }
