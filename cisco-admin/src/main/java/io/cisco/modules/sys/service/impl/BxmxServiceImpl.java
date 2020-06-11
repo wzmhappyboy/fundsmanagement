@@ -32,4 +32,8 @@ public class BxmxServiceImpl implements BxmxService {
         System.out.println("bxmxId:"+id);
         bxmxDao.updateBxmxState(id);
     }
+    @Override
+    public void insert(Bxmx bxmx){
+       bxmxDao.insertBxmx(bxmx);
+    }
 }

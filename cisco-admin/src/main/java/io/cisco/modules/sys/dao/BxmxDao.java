@@ -12,5 +12,5 @@ public interface BxmxDao
     List<Bxmx> queryPassBxmx(Long id);
     List<Bxmx> queryNotPassBxmx(Long id);
     void updateBxmxState(Long id);
-
+    void insertBxmx(Bxmx bxmx);
 }

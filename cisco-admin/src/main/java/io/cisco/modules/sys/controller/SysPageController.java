@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +92,27 @@ public class SysPageController {
 		System.out.println("controller层的id:");
 		Long l=(long) Integer.parseInt(id);
 		bxmxService.update(l);
+		Map<String,Object> map=new HashMap<>();
+		map.put("result",1);
+		return map;
+	}
+
+	@ResponseBody
+	@PostMapping("/upup")
+	public Map<String,Object> upUp(@RequestParam("id") String id,@RequestParam("name") String name,@RequestParam("size") String size,@RequestParam("amount") String amount,@RequestParam("prise") double prise,@RequestParam("dept_id") String dept_id){
+		System.out.println("id:"+id+"name:"+name+"size"+size+"amount:"+amount+"prise:"+prise+"dept_id:"+dept_id);
+		Long l=(long) Integer.parseInt(id);
+		Long d=(long) Integer.parseInt(dept_id);
+		int n=Integer.parseInt(amount);
+		BigDecimal p=new BigDecimal(prise);
+		Bxmx bxmx=new Bxmx();
+		bxmx.setId(l);
+		bxmx.setName(name);
+		bxmx.setNumber(n);
+		bxmx.setDept_id(d);
+		bxmx.setSize(size);
+		bxmx.setPrice(p);
+		bxmxService.insert(bxmx);
 		Map<String,Object> map=new HashMap<>();
 		map.put("result",1);
 		return map;

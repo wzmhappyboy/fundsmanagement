@@ -27,6 +27,13 @@ var vm = new Vue({
             parentName:null,
             parentId:0,
             orderNum:0
+        },
+        newbxmx:{
+            id:null,
+            name:null,
+            size:null,
+            amount:null,
+            prise:null
         }
     },
     methods: {
@@ -97,6 +104,30 @@ var vm = new Vue({
                 //async:true,
                 success: function (data) {
                     vm.manage();
+                },
+                error:function (data) {
+                    alert(data.responseText);
+                }
+            });
+
+        },
+        upup: function(){
+            var deptId = getDeptId();
+
+            $.ajax({
+                type:"POST",
+                url:   "/upup",
+                data:{
+                    "id":vm.newbxmx.id,
+                    "name":vm.newbxmx.name,
+                    "size":vm.newbxmx.size,
+                    "amount":vm.newbxmx.amount,
+                    "prise":vm.newbxmx.prise,
+                    "dept_id":deptId
+                },
+
+                success: function (data) {
+                    vm.manage2();
                 },
                 error:function (data) {
                     alert(data.responseText);

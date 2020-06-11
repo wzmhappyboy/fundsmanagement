@@ -8,4 +8,5 @@ public interface BxmxService {
     List<Bxmx> queryPassBxmx(Long id);
     List<Bxmx> queryNotPassBxmx(Long id);
     void update(Long id);
+    void  insert(Bxmx bxmx);
 }

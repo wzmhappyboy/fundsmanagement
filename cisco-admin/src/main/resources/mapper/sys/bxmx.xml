@@ -10,4 +10,8 @@
     <update id="updateBxmxState" parameterType="long">
         update item_detail set flag=1 where id=#{id}
     </update>
+    <insert id="insertBxmx" parameterType="io.cisco.modules.sys.entity.Bxmx">
+        insert into item_detail(id,name,dept_id,size,number,price,flag)
+        values (#{id},#{name},#{dept_id},#{size},#{number},#{price},0)
+    </insert>
 </mapper>
