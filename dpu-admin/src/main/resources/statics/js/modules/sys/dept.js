@@ -23,6 +23,7 @@ var vm = new Vue({
         bxmxs:null,
         bxmxs2:null,
         home:true,
+        sum:null,
         dept:{
             parentName:null,
             parentId:0,
@@ -67,6 +68,8 @@ var vm = new Vue({
                     vm.name=data.name;
                     vm.xmmx=false;
                     vm.home=false;
+                    vm.sum=data.sum;
+
                 },
                 error:function (data) {
                     alert("系统错误");
@@ -75,7 +78,7 @@ var vm = new Vue({
         },
         manage2: function(){
             var deptId =getDeptId();
-
+                alert("id:"+deptId)
             $.ajax({
                 type: "POST",
                 url:  "/management.html",
@@ -88,6 +91,7 @@ var vm = new Vue({
                     vm.name=data.name;
                     vm.manage=false;
                     vm.home=false;
+                    vm.sum=data.sum;
                 },
                 error:function (data) {
                     alert("系统错误");
@@ -103,7 +107,7 @@ var vm = new Vue({
                 // dataType:"json",
                 //async:true,
                 success: function (data) {
-                    vm.manage();
+                    vm.mma();
                 },
                 error:function (data) {
                     alert(data.responseText);

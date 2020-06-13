@@ -61,7 +61,7 @@
 	</insert>
 
 	<select id="queryPage" resultMap="sysUserResultMap">
-		select  * from sys_user t1 join sys_dept t2 on t1.dept_id=t2.dept_id
+		select  * from sys_user t1 join sys_item t2 on t1.dept_id=t2.dept_id
 <!--		<if test="sql_filter != null">-->
 <!--			and ${sql_filter}-->
 <!--		</if>-->

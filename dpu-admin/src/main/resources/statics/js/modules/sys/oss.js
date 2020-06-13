@@ -2,10 +2,10 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/oss/list',
         datatype: "json",
-        colModel: [			
+        colModel: [
 			{ label: 'id', name: 'id', width: 20, key: true },
-            { label: 'URL地址', name: 'url', width: 160 },
-            { label: '文件名', name: 'name', width: 60 },
+            { label: 'URL地址', name: 'url', width: 60 },
+            { label: '文件名', name: 'name', width: 160 },
             { label: '创建时间', name: 'createDate', width: 40 },
             // {
             //     formatter:function (cellValue,options,rowdata) {
@@ -21,7 +21,7 @@ $(function () {
         rowNum: 10,
 		rowList : [10,30,50],
         //rownumbers: true,
-        rownumWidth: 25, 
+        rownumWidth: 25,
         autowidth:true,
         multiselect: true,
         pager: "#jqGridPager",
@@ -32,13 +32,13 @@ $(function () {
             records: "page.totalCount"
         },
         prmNames : {
-            page:"page", 
-            rows:"limit", 
+            page:"page",
+            rows:"limit",
             order: "order"
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
         }
     });
     function editLink(cellValue,options,rowdata,action) {
@@ -145,7 +145,7 @@ var vm = new Vue({
 		reload: function () {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
                 page:page
             }).trigger("reloadGrid");
 		}

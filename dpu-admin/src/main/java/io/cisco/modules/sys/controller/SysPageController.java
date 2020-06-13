@@ -76,6 +76,8 @@ public class SysPageController {
 		Long l=(long)id2;
 		List<Bxmx> list=bxmxService.queryPassBxmx(l);
 		List<Bxmx> list2=bxmxService.queryNotPassBxmx(l);
+		BigDecimal b=bxmxService.showSum(l);
+		System.out.println("sum:"+b);
 		SysDeptEntity sysDeptEntity=sysDeptService.getById(l);
 		//System.out.println(sysDeptEntity.getName());
 		String name=sysDeptEntity.getName();
@@ -83,6 +85,7 @@ public class SysPageController {
 		result.put("list",list);
 		result.put("list2",list2);
 		result.put("name",name);
+		result.put("sum",b);
 		return result;
 
 	}

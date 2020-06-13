@@ -6,6 +6,7 @@ import io.cisco.modules.sys.service.BxmxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -35,5 +36,12 @@ public class BxmxServiceImpl implements BxmxService {
     @Override
     public void insert(Bxmx bxmx){
        bxmxDao.insertBxmx(bxmx);
+    }
+
+    @Override
+    public BigDecimal showSum(Long id)
+    {
+        BigDecimal b=bxmxDao.showSum(id);
+        return  b;
     }
 }
